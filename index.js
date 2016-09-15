@@ -1,15 +1,14 @@
 'use strict';
 const trough = require('through2-concurrent');
-const trough2 = require('through2');
 const gutil = require('gulp-util');
-const replace = require('gulp-replace');
 
 String.prototype.replaceArray = function(find, replace) {
   var replaceString = this;
   var regex; 
   for (var i = 0; i < find.length; i++) {
-    regex = new RegExp(find[i], "g");
-    replaceString = replaceString.replace(regex, replace[i]);
+  	var string = find[i].concat("\\(");
+    regex = new RegExp(string, "g");
+    replaceString = replaceString.replace(regex, replace[i].concat("("));
   }
   return replaceString;
 };
@@ -17,26 +16,19 @@ String.prototype.replaceArray = function(find, replace) {
 function codeObfuscator(replacmentList) {
 	var stream = trough.obj( function( file, enc, cb ) {
 		if( file.isNull() ){
-			cb(new gutil.PluginError('gulp-code-obfuscator', 'No file given'));
-			return;
+			return cb(new gutil.PluginError('gulp-code-obfuscator', 'No file given'), file);
 		}
 		if( file.isStream() ) {
-			cb(new gutil.PluginError('gulp-code-obfuscator', 'Streaming not supported'), file);
-			//return;
+			return cb(new gutil.PluginError('gulp-code-obfuscator', 'Streaming not supported'), file);
 		}
 
 		if( file.isBuffer() ) {
-			//if (search instanceof RegExp) {
-
-			file.contents = new Buffer(String(file.contents).replaceArray(["foobar", "lorem"], ["barfoo", "ipsum"]));
-			//}
-			//replace("foobar", "barfoo");
-			//cb(new gutil.PluginError('gulp-code-obfuscator', 'Buffer not supported'), file);
-			//return;
+			console.log(file.path);
+			file.contents = new Buffer(String(file.contents).replaceArray(replacmentList[0], replacmentList[1]));
 		}
-		cb(null, file);
 		// make sure the file goes through the next gulp plugin
-		//this.push(file);
+		this.push(file);
+		cb(null, file);
 
 	}, cb => {
 		gutil.log('gulp-code-obfuscator');
