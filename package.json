@@ -1,0 +1,35 @@
+{
+  "name": "gulp-code-obfuscator",
+  "version": "1.0.0",
+  "description": "Obfuscate php code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dasmenz/gulp-php-obfuscator.git"
+  },
+  "keywords": [
+    "gulpplugin",
+    "obfuscator",
+    "php"
+  ],
+  "author": {
+    "name": "Sebastian Menz",
+    "email": "s.menz@fbo.de",
+    "url": "www.fbo.de"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dasmenz/gulp-php-obfuscator/issues"
+  },
+  "homepage": "https://github.com/dasmenz/gulp-php-obfuscator#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "gulp-replace": "^0.5.4",
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.1",
+    "through2-concurrent": "^1.1.1"
+  }
+}
