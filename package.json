@@ -1,14 +1,14 @@
 {
-  "name": "gulp-code-obfuscator",
-  "version": "1.0.0",
-  "description": "Obfuscate php code",
+  "name": "gulp-mass-replacer",
+  "version": "1.0.1",
+  "description": "This allows to replace one array of values with an other one like PHP preg_replace",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dasmenz/gulp-php-obfuscator.git"
+    "url": "git+https://github.com/dasMenz/gulp-mass-replacer.git"
   },
   "keywords": [
     "gulpplugin",
@@ -22,9 +22,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dasmenz/gulp-php-obfuscator/issues"
+    "url": "https://github.com/dasmenz/gulp-mass-obfuscator/issues"
   },
-  "homepage": "https://github.com/dasmenz/gulp-php-obfuscator#readme",
+  "homepage": "https://github.com/dasmenz/gulp-mass-obfuscator#readme",
   "dependencies": {
     "gulp-util": "^3.0.7",
     "through2-concurrent": "^1.1.1"

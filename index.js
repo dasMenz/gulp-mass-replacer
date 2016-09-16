@@ -6,9 +6,23 @@ String.prototype.replaceArray = function(find, replace) {
   var replaceString = this;
   var regex; 
   for (var i = 0; i < find.length; i++) {
-  	var string = find[i].concat("\\(");
+  	//var string = "(?<!(_|[a-zA-Z0-9]))";
+  	var string = "(.|\s|)(";
+  	// string = string.concat(find[i]);
+  	string = string.concat(find[i].concat(")\\("));
     regex = new RegExp(string, "g");
-    replaceString = replaceString.replace(regex, replace[i].concat("("));
+    // replaceString = replaceString.replace(regex, replace[i].concat("("));
+    replaceString = replaceString.replace(regex, function($0, $1){
+    	/*console.log("$0"+$0);
+    	console.log("$1"+$1.concat( replace[i].concat( "(" ) ));*/
+    	if($1 == " " || $1 == ">" || $1 == ":" || $1 == "\t" || $1 == "\n" || $1 == "") {
+    		return $1.concat( replace[i].concat( "(" ) );
+    	} else {
+    		return $0;
+    	}
+    	/*var return_string = $0.concat(replace[i]);
+    	return return_string.concat("(")*/
+    });
   }
   return replaceString;
 };
@@ -16,10 +30,10 @@ String.prototype.replaceArray = function(find, replace) {
 function codeObfuscator(replacmentList) {
 	var stream = trough.obj( function( file, enc, cb ) {
 		if( file.isNull() ){
-			return cb(new gutil.PluginError('gulp-code-obfuscator', 'No file given'), file);
+			return cb(new gutil.PluginError('gulp-mass-replacer', 'No file given'), file);
 		}
 		if( file.isStream() ) {
-			return cb(new gutil.PluginError('gulp-code-obfuscator', 'Streaming not supported'), file);
+			return cb(new gutil.PluginError('gulp-mass-replacer', 'Streaming not supported'), file);
 		}
 
 		if( file.isBuffer() ) {
@@ -31,7 +45,7 @@ function codeObfuscator(replacmentList) {
 		cb(null, file);
 
 	}, cb => {
-		gutil.log('gulp-code-obfuscator');
+		gutil.log('gulp-mass-replacer');
 		cb();
 	});
 	return stream;
