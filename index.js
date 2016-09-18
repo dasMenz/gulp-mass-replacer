@@ -7,19 +7,21 @@ String.prototype.replaceArray = function(find, replace) {
   var regex; 
   for (var i = 0; i < find.length; i++) {
   	//var string = "(?<!(_|[a-zA-Z0-9]))";
-  	var string = "(.|\s|)(";
+  	var string = "(.|\\s|)(";
   	// string = string.concat(find[i]);
-  	string = string.concat( find[i].concat( ")(\\(|\'|\")"  ) );
+  	string = string.concat( find[i].concat( ")(\\(|\'|\"|\\s+)"  ) );
     regex = new RegExp(string, "g");
     // replaceString = replaceString.replace(regex, replace[i].concat("("));
     replaceString = replaceString.replace(regex, function($0, $1, $2, $3){
     	/*console.log("$0"+$0);
     	console.log("$1"+$1.concat( replace[i].concat( "(" ) ));*/
-    	if( ( $1 == " " || $1 == ">" || $1 == ":" || $1 == "\t" || $1 == "\n" || $1 == "" || $1 == "'" || $1 == "\"" ) && $2 != "" ) {
-		/*console.log("$0 "+$0);
-		console.log("$1 "+$1);
-		console.log("$2 "+$2);
-		console.log("$3 "+$3);*/
+    	if( ( $1 == " " || $1 == ">" || $1 == ":" || $1 == "\t" || $1 == "\n" || $1 == "" || $1 == "'" || $1 == "\"" || $1 == "!" || $1 == "(" || $1 == "[" || $1 == "." || $1 == ",") && ($3 == "(" || $3 == "'" || $3 == "\"" || $3 == " ") ) {
+		/*if($2 == "get_post_type_object") {
+			console.log("$0 "+$0+";");
+			console.log("$1 "+$1+";");
+			console.log("$2 "+$2+";");
+			console.log("$3 "+$3+";");
+		}*/
     		return $1.concat( replace[i].concat( $3 ) );
     	} else {
     		return $0;
